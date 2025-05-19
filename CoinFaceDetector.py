@@ -1,22 +1,30 @@
-## automatic 10 secs
+""" Main Code block for the Coin Face Detector """
+
+## Import modules
 import cv2 as cv
 import pandas as pd
-import numpy as np
 import datetime
 import time
 import TemplateMatching
 
+""" This method works by using template matching """
+""" of the selected heads and tails image of a coin """
+
+## Input the image files for the heads and tails
 tails_file = 'Tails.jpg'
 heads_file = 'Heads.jpg'
-flag = cv.IMREAD_COLOR_BGR
-method = cv.TM_CCOEFF_NORMED
+
+flag = cv.IMREAD_COLOR_BGR      # imread flag
+method = cv.TM_CCOEFF_NORMED    # method used in template matching
+
+# set threshold for each side
 tails_threshold = 0.4
 heads_threshold = 0.6
 
+""" Obtain a live feed for the toss coin """
 # Initialize camera
 cap = cv.VideoCapture(1)
 cap.set(cv.CAP_PROP_EXPOSURE,-4)
-
 
 # Set video codec and output settings
 fourcc = cv.VideoWriter_fourcc(*'XVID')
@@ -27,6 +35,7 @@ last_capture_time = 0
 image_counter = 0  # Counter for number of auto-captured images
 capture_interval = 10  # seconds
 
+# counter for heads and tails
 num_heads = 0
 num_tails = 0
 
@@ -34,12 +43,15 @@ print(f"Press 'c' to start automatic image capture every {capture_interval} seco
 print("Press 'r' to reset counter")
 print("Press 'q' to quit")
 
+# save the heads and tails count as dataframe
+# to be saved as csv
 data = {
     "capture_count": image_counter,
     "num_heads": num_heads,
     "num_tails": num_tails
 }
 df = pd.DataFrame([data])
+
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -58,21 +70,27 @@ while cap.isOpened():
     # Automatically capture image every 10 seconds
     if auto_capture and (current_time - last_capture_time) >= capture_interval:
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        # save the captured image
         img_filename = f"captures/capture_{timestamp}.jpg"
         cv.imwrite(img_filename, frame)
+        
         image_counter += 1
         print(f"[Auto] Image saved: {img_filename}")
         last_capture_time = current_time
         
+        # open the saved image as the haystack image
         image = cv.imread(img_filename, cv.IMREAD_UNCHANGED)
         if image.size:
             result_file = f"results/result_{timestamp}.jpg"
+            # match the heads and tails image 
             result = TemplateMatching.coin_match(img_filename, heads_file, tails_file, result_file,
                                                          flag, method, 
                                                          heads_threshold, tails_threshold)
             num_heads += result.num_heads
             num_tails += result.num_tails
             
+            # update the data if heads and tails were found
             if result.num_heads!=0 or result.num_tails!=0:
                 new_data = {
                     "capture_count": image_counter,
@@ -83,7 +101,6 @@ while cap.isOpened():
             
         else:
             print('No image')
-
 
     # Overlay image counter
     overlay_text = f"Images Captured: {image_counter}"
@@ -106,7 +123,7 @@ while cap.isOpened():
     # Wait for key press
     key = cv.waitKey(1) & 0xFF
 
-    if key == ord('c'):
+    if key == ord('c'): # toggle auto capture
         if not auto_capture:
             auto_capture = True
             last_capture_time = time.time()
@@ -120,7 +137,7 @@ while cap.isOpened():
                 data_filename = f"datasets/data_{timestamp}.csv"
                 df.to_csv(data_filename, index=False)
 
-    elif key == ord('r'):
+    elif key == ord('r'): # reset the counter and stop the auto capture
         num_heads = 0
         num_tails = 0
         print("Coin face counter reset.")
@@ -134,7 +151,7 @@ while cap.isOpened():
             df.to_csv(data_filename, index=False)
             
 
-    elif key == ord('q'):
+    elif key == ord('q'): # quit the program
         print("Quitting...")
         break
 
