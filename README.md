@@ -48,3 +48,12 @@ This project implements a **coin face detection system** using **OpenCV's templa
 ## Example Use Case
 
 This project can serve as a prototype for basic object detection using template matching. By simplifying real-world objects into solid-color representations, it makes the detection process more reliable for educational demonstrations or controlled-environment projects.
+
+## Reference
+
+## References
+
+This project used Learn Code By Gaming's playlist on OpenCV Object Detection in games as a foundation for the template matching and rectangle grouping code.
+
+**Learn Code By Gaming**. (n.d.). *OpenCV Object Detection in Games* [YouTube Playlist].  
+[![OpenCV Object Detection in Games](https://img.youtube.com/vi/0sAf5C7lqYE/0.jpg)](https://youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI)
