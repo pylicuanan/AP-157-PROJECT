@@ -55,4 +55,4 @@ This project can serve as a prototype for basic object detection using template 
 
 This project used Learn Code By Gaming's playlist on OpenCV Object Detection in games as a foundation for the template matching and rectangle grouping code.
 
-**Learn Code By Gaming**. (n.d.). *OpenCV Object Detection in Games* [YouTube Playlist]. [![https://youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI]](https://youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI)
+**Learn Code By Gaming**. (n.d.). *OpenCV Object Detection in Games* [YouTube Playlist]. [https://youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI](https://youtube.com/playlist?list=PL1m2M8LQlzfKtkKq2lK5xko4X-8EZzFPI)
