@@ -24,7 +24,7 @@ heads_threshold = 0.6
 """ Obtain a live feed for the toss coin """
 # Initialize camera
 cap = cv.VideoCapture(1)
-cap.set(cv.CAP_PROP_EXPOSURE,-4)
+cap.set(cv.CAP_PROP_EXPOSURE,-4) # set fixed exposure level
 
 # Set video codec and output settings
 fourcc = cv.VideoWriter_fourcc(*'XVID')
